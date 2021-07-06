@@ -1,0 +1,64 @@
+seed: [0] #[1,2,3,4]
+name: 'wholemask' # use 4digit name tag to overwrite experiment with same parameters
+test_unseen: False # this will turn off train mode and test on a specified center
+test_without_hist: False # this will turn off histogramStandardization for test set. Used just to calculate intensities.
+cvtype: CCV #cross validation type (LCO (Leave Center Out) vs CCV (Collaborative Cross Validation))
+hyperparameters:
+    num_epochs : 100
+    iteration_number: 8 # this will define the number of batches when doing federated (we want the same number of iterations)
+    training_batch_size : 10  # for centralized
+    test_batch_size : 10 #use a higher one for speed up if CUDA memory allows  
+    criterion : torch.nn.BCELoss
+    optimizer : torch.optim.Adam
+    lr : 0.01
+    early_stop_counter: 20 # number of iterations after performance stagnation before stopping
+model:
+    # The model name used here will generate a new experiment in the ~/mnm/experiments
+    arch:
+        function: models.nets.ResNet3D_18_Classifier
+        dimensionality: '3D' # or 2D
+        args: #keyword arguments for function
+            pretrained: True
+            in_ch: 3
+            out_ch: 1
+            linear_ch: 512
+#             out_ch: 1 #
+            early_layers_learning_rate: 1e-5 #10^-5, if set to 0 early layers will be frozen 
+            seed: 42 # Particularly important for federated. Models will make no sense if we aggregate from different initializations
+    pretrained: # if we have our own weights
+        isTrue: False
+        weights: workenv/mnm/experiments/UResNet_segmentation_weights/models/init-seg/models/best_model.pth
+    continue: True # you have to have continue True and name set to an existing folder you want to continue training on
+data:
+    pathologies: ['NOR','HCM'] #,'RV','DCM','MINF'] #, 'RV'] #, 'DCM' ['DCM', 'HCM', 'NOR', 'RV']
+    binary_labels: ['NOR','HCM'] #['NOR','ABNOR'] for label encoder
+    concatenateEDES: False # if False and in_ch==3, Fragmented-Heart scheme will be applied
+    only_masks: False
+    multiply_by_mask: True
+    crossvalidation: True
+    triplicate: True
+    centres:
+        - "Vall d'Hebron" 
+        - "Sagrada Familia"
+        # - "Dexeus"
+        - "ACDC"
+        - "SantPau" # HCM vs NOR, TypeError: must be real number, not str. Federated and Centralized
+        # - "UKE" # Only DCM
+    labels: [0,1]
+    transformations: N # N, B, S, I, SI (none, basic, shape, intensity, shape&intensity)
+federated:
+    isTrue: False 
+    type: FL
+    averaging: SSP # EV, SSP, SSRP (equal vote/sample size proportional/reverse proportional)
+names:
+    labelencoder: le.pkl
+    fold_split: fold_indices.pkl
+    histogram: VSSA-ROInorm #VSDSA-ROInorm #2centerSingleROInorm #VSDS-ROInorm #'' #'heart_area'
+paths:
+    ACDC:
+        raw: Datasets/ACDC
+        processed:  Datasets/ACDC/Processed
+    dataset: Datasets/MnM/NewProcessed 
+    raw_dataset: Datasets/MnM/Original
+    experiments: workenv/mnm-github/experiments
+    misc: /experiment/misc

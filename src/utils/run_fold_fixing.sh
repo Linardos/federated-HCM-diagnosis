@@ -1,0 +1,1 @@
+python fold_fixing.py -n fold_indices_norabnor -p 0006_3D_centersVSDSUA_FL_noAugs_alldata
