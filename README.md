@@ -2,7 +2,7 @@
 A study in multi-center imaging diagnostics, emphasizing on the modality of cardiovascular magnetic resonance and the prediction of hypertrophic cardiomyopathy.
 
 ## Pipeline
-![](docs/pipeline.pdf)
+![](docs/pipeline.png)
 
 ## Code Outline
 ```
