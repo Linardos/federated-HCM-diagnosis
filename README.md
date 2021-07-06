@@ -9,3 +9,6 @@ cd </path/to/your/experiment>
 docker build -t experiment .
 docker run -v </path/to/datasets>:/root/Datasets -v </path/to/your/experiment>:/experiment experiment
 ```
+
+# Adapting to another problem
+You may adapt this set-up to another diagnostics (or possibly segmentation) problem by tampering with the following files included in the src/classification: config.yaml, models/nets.py, data_loader.py
