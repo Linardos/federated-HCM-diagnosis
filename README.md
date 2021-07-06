@@ -32,7 +32,7 @@ docker run -v </path/to/datasets>:/root/Datasets -v </path/to/your/experiment>:/
 ```
 
 ## Improving upon the Federated CMR diagnostics
-If your goal is to study other models or multi-label classification in a federated set-up, add your model in the 
+If your goal is to study other models or multi-label classification in a federated set-up, add your model in the nets.py and/or configure config.yaml accordingly
 
 ## Adapting to another problem
 You may adapt this set-up to another diagnostics (or possibly segmentation) problem by tampering with the following files included in the src/classification: config.yaml, models/nets.py, data_loader.py
