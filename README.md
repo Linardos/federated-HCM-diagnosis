@@ -1,6 +1,19 @@
 # Federated HCM diagnosis
 A study in multi-center imaging diagnostics, emphasizing on the modality of cardiovascular magnetic resonance and the prediction of hypertrophic cardiomyopathy.
 
+
+## Publication
+Find the published version of our work here: [arXiv](https://arxiv.org/abs/2107.03901). Also, if this project has been helpful to your work, please consider citing us:
+```
+
+@article{linardos2021federated,
+  title={Federated Learning for Multi-Center Imaging Diagnostics: A Study in Cardiovascular Disease},
+  author={Linardos, Akis and Kushibar, Kaisar and Walsh, Sean and Gkontra, Polyxeni and Lekadir, Karim},
+  journal={arXiv preprint arXiv:2107.03901},
+  year={2021}
+}
+```
+
 ## Pipeline
 ![](docs/pipeline.png)
 
